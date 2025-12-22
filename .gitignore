@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.db
+settings.json
+.DS_Store
+.spyproject/
