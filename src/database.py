@@ -4,6 +4,7 @@ import os
 
 class DatabaseManager:
     def __init__(self, settings_file='settings.json'):
+        # Pad bepalen naar settings.json
         base_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.dirname(base_dir)
         full_path = os.path.join(project_root, settings_file)
@@ -21,8 +22,7 @@ class DatabaseManager:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 naam TEXT NOT NULL,
                 kcal_per_100g INTEGER,
-                prijs_per_eenheid REAL,
-                eenheid TEXT
+                prijs_per_eenheid REAL
             )
         ''')
         cursor.execute('''
@@ -36,7 +36,13 @@ class DatabaseManager:
         ''')
         conn.commit()
         conn.close()
-        print("Succes!")
-if __name__ == "__main__":
-    db = DatabaseManager()
-    db.create_tables()
+    def voeg_product_toe(self, naam, kcal, prijs):
+        conn = self.connect()
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO producten (naam, kcal_per_100g, prijs_per_eenheid)
+            VALUES (?, ?, ?)
+        ''', (naam, kcal, prijs))
+        conn.commit()
+        conn.close()
+        print(f"'{naam}' is toegevoegd aan de database.")

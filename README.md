@@ -1,36 +1,65 @@
 # BulkTracker
 
-BulkTracker is a command-line interface (CLI) application designed to help users track their caloric intake and food costs during a "bulking" phase. It allows users to manage a database of food products and log their daily consumption to monitor both nutrition and budget.
+BulkTracker is een command-line interface (CLI) applicatie geschreven in Python.  
+Het project helpt gebruikers tijdens een *bulking phase* om zowel hun **calorie-inname** als **voedingskosten** bij te houden.
+
+De applicatie maakt gebruik van een SQLite-database waarin producten en dagelijkse consumptie worden opgeslagen.
 
 ## Features
-* **Product Management:** Add food items with their nutritional value (kcal) and price.
-* **Daily Logging:** Track what you eat and when.
-* **Database:** Uses SQLite for persistent data storage.
-* **Privacy:** Database configuration is separated from the code via a settings file.
 
-## Project Structure
-* `src/`: Contains the source code (database logic, models, main script).
-* `data/`: Stores the SQLite database file (not included in Git).
-* `settings_example.json`: A template for the configuration file.
+- **Productbeheer**
+  - Voeg voedingsproducten toe met calorieën en prijs
+- **Dagboek**
+  - Log dagelijkse consumptie
+- **Database**
+  - SQLite voor persistente opslag
+- **Configuratie**
+  - Database-instellingen gescheiden via een `settings.json` bestand
+- **CLI-gebaseerd**
+  - Eenvoudig te gebruiken vanuit de terminal
 
-## Installation & Setup (How to run)
+## Installatie & Setup
 
-To run this project locally, follow these steps:
+Volg deze stappen om het project lokaal te draaien.
 
-### 1. Clone the repository
+#1 Repository clonen
 
-`git clone <URL_TO_YOUR_REPO>`
-`cd BulkTracker`
+git clone <URL_TO_YOUR_REPO>
+cd BulkTracker
 
-### 2. Create a Virtual Environment
-It is recommended to use a virtual environment.
+#2 Virtuele omgeving aanmaken (aanbevolen)
 
-`python -m venv venv`
-`venv\Scripts\activate`
+python -m venv venv
+venv\Scripts\activate
 
+#3 Dependencies installeren
 
+pip install -r requirements.txt
 
-### 3. Install Requirements
-Install the necessary Python packages.
+#4 Configuratie instellen (BELANGRIJK)
 
-`pip install -r requirements.txt`
+De applicatie verwacht een settings.json bestand.
+
+Zoek settings_example.json in de hoofdmap
+
+Kopieer dit bestand
+
+Hernoem de kopie naar settings.json
+
+Inhoud van settings.json:
+
+{
+    "db_name": "data/bulk_data.db"
+}
+
+#5 Database initialiseren
+
+Bij de eerste run moet je de database en tabellen aanmaken:
+
+python src/database.py
+
+##Auteur
+
+Iwein Vander Roost
+r0999297
+Student Toegepaste Informatica – VIVES
