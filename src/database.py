@@ -78,3 +78,23 @@ class DatabaseManager:
         conn.commit()
         conn.close()
         print("Succes! Consumptie is geregistreerd.")
+        
+    def haal_alle_consumpties(self):
+        conn = self.connect()
+        cursor = conn.cursor()
+        
+        query = '''
+            SELECT 
+                dagboek.datum, 
+                producten.naam, 
+                dagboek.hoeveelheid, 
+                producten.kcal_per_100g, 
+                producten.prijs_per_eenheid
+            FROM dagboek
+            JOIN producten ON dagboek.product_id = producten.id
+            ORDER BY dagboek.datum DESC
+        '''
+        cursor.execute(query)
+        resultaat = cursor.fetchall()
+        conn.close()
+        return resultaat
