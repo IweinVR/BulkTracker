@@ -22,21 +22,21 @@ De applicatie maakt gebruik van een SQLite-database waarin producten en dagelijk
 
 Volg deze stappen om het project lokaal te draaien.
 
-#1 Repository clonen
+**1. Repository clonen**
 
 git clone <URL_TO_YOUR_REPO>
 cd BulkTracker
 
-#2 Virtuele omgeving aanmaken (aanbevolen)
+**2. Virtuele omgeving aanmaken (aanbevolen)**
 
 python -m venv venv
 venv\Scripts\activate
 
-#3 Dependencies installeren
+**3. Dependencies installeren**
 
 pip install -r requirements.txt
 
-#4 Configuratie instellen (BELANGRIJK)
+**4. Configuratie instellen (BELANGRIJK)** 
 
 De applicatie verwacht een settings.json bestand.
 
@@ -52,13 +52,13 @@ Inhoud van settings.json:
     "db_name": "data/bulk_data.db"
 }
 
-#5 Database initialiseren
+**5. Database initialiseren**
 
 Bij de eerste run moet je de database en tabellen aanmaken:
 
 python src/database.py
 
-##Auteur
+***Auteur***
 
 Iwein Vander Roost
 r0999297
