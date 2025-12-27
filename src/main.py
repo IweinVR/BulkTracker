@@ -8,7 +8,9 @@ def toon_menu():
     print("2. Lijst met producten tonen")
     print("3. Iets gegeten? (Loggen)")
     print("4. Excel Rapport maken")
-    print("5. Stoppen")
+    print("5. Product prijs wijzigen")
+    print("6. Product verwijderen")     
+    print("7. Stoppen")
     print("-------------------------")
 
 def nieuw_product_toevoegen(db):
@@ -27,13 +29,13 @@ def toon_producten_lijst(db):
     
     if not producten:
         print("Nog geen producten gevonden.")
-        return
+        return False
 
     print(f"{'ID':<4} | {'Naam':<20} | {'Kcal/100g':<10} | {'Prijs':<10}")
     print("-" * 50)
     for p in producten:
-        
         print(f"{p[0]:<4} | {p[1]:<20} | {p[2]:<10} | € {p[3]:<10.2f}")
+    return True    
         
 def log_consumptie(db):
     print("\n--- ETEN LOGGEN ---")
@@ -53,6 +55,29 @@ def genereer_rapport(db):
     print("\n--- RAPPORT GENEREREN ---")
     rapport = RapportGenerator(db)
     rapport.maak_excel_rapport()
+    
+def wijzig_product_prijs(db):
+    print("\n--- PRIJS WIJZIGEN ---")
+    if toon_producten_lijst(db):
+        try:
+            prod_id = int(input("\nWelk ID wil je aanpassen? "))
+            nieuwe_prijs = float(input("Wat is de nieuwe prijs? "))
+            db.update_prijs(prod_id, nieuwe_prijs)
+        except ValueError:
+            print("FOUT: Ongeldige invoer.") 
+            
+def verwijder_een_product(db):
+    print("\n--- PRODUCT VERWIJDEREN ---")
+    if toon_producten_lijst(db):
+        try:
+            prod_id = int(input("\nWelk ID wil je verwijderen? "))
+            bevestiging = input(f"Weet je zeker dat je ID {prod_id} wilt wissen? (j/n): ")
+            if bevestiging.lower() == 'j':
+                db.verwijder_product(prod_id)
+            else:
+                print("Geannuleerd.")
+        except ValueError:
+            print("FOUT: Ongeldige invoer.")
         
 def main():
     db = DatabaseManager()
@@ -60,7 +85,7 @@ def main():
 
     while True:
         toon_menu()
-        keuze = input("Maak een keuze (1-5): ")
+        keuze = input("Maak een keuze (1-7): ")
 
         if keuze == '1':
             nieuw_product_toevoegen(db)
@@ -71,6 +96,10 @@ def main():
         elif keuze == '4':
             genereer_rapport(db)
         elif keuze == '5':
+            wijzig_product_prijs(db)
+        elif keuze == '6':
+            verwijder_een_product(db)
+        elif keuze == '7':
             print("Tot ziens!")
             sys.exit()
         else:

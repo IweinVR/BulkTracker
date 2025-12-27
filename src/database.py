@@ -78,7 +78,40 @@ class DatabaseManager:
         conn.commit()
         conn.close()
         print("Succes! Consumptie is geregistreerd.")
+   
+    def verwijder_product(self, product_id):
+        conn = self.connect()
+        cursor = conn.cursor()
         
+        cursor.execute('DELETE FROM producten WHERE id = ?', (product_id,))
+        
+        conn.commit()
+        aantal_gewist = cursor.rowcount
+        conn.close()
+        
+        if aantal_gewist > 0:
+            print("Succes! Het product is verwijderd.")
+        else:
+            print("FOUT: Kon product niet vinden.")
+    
+    def update_prijs(self, product_id, nieuwe_prijs):
+        conn = self.connect()
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE producten 
+            SET prijs_per_eenheid = ? 
+            WHERE id = ?
+        ''', (nieuwe_prijs, product_id))
+        conn.commit()
+        # We checken of er echt iets veranderd is (rowcount)
+        aantal_aangepast = cursor.rowcount
+        conn.close()
+        
+        if aantal_aangepast > 0:
+            print("Succes! De prijs is aangepast.")
+        else:
+            print("FOUT: Geen product gevonden met dit ID.")    
+    
     def haal_alle_consumpties(self):
         conn = self.connect()
         cursor = conn.cursor()
