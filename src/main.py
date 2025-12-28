@@ -3,6 +3,7 @@ from rapportage import RapportGenerator
 import sys
 
 def toon_menu():
+    """Toont het hoofdmenu met alle opties in de terminal."""
     print("\n--- BULK TRACKER MENU ---")
     print("1. Nieuw product toevoegen")
     print("2. Lijst met producten tonen")
@@ -14,6 +15,7 @@ def toon_menu():
     print("-------------------------")
 
 def nieuw_product_toevoegen(db):
+    """Vraagt de gebruiker om input en maakt een nieuw product aan."""
     print("\n--- PRODUCT TOEVOEGEN ---")
     try:
         naam = input("Naam van het product (bv. Kipfilet): ")
@@ -24,6 +26,11 @@ def nieuw_product_toevoegen(db):
         print("FOUT: Voer aub geldige getallen in voor kcal en prijs!")
 
 def toon_producten_lijst(db):
+    """
+    Haalt alle producten op en print ze in een tabel.
+    Returns:
+        True als er producten zijn, False als de lijst leeg is.
+    """
     print("\n--- PRODUCTENLIJST ---")
     producten = db.haal_producten_op()
     
@@ -38,6 +45,7 @@ def toon_producten_lijst(db):
     return True    
         
 def log_consumptie(db):
+    """Voegt een entry toe aan het dagboek (wat heb je gegeten)."""
     print("\n--- ETEN LOGGEN ---")
     
     toon_producten_lijst(db)
@@ -52,11 +60,13 @@ def log_consumptie(db):
         print("FOUT: Voer geldige getallen in.")   
         
 def genereer_rapport(db):
+    """Start de rapportage module om een Excel te maken."""
     print("\n--- RAPPORT GENEREREN ---")
     rapport = RapportGenerator(db)
     rapport.maak_excel_rapport()
     
 def wijzig_product_prijs(db):
+    """Past de prijs van een bestaand product aan."""
     print("\n--- PRIJS WIJZIGEN ---")
     if toon_producten_lijst(db):
         try:
@@ -67,6 +77,7 @@ def wijzig_product_prijs(db):
             print("FOUT: Ongeldige invoer.") 
             
 def verwijder_een_product(db):
+    """Verwijderd een product uit de database op basis van ID."""
     print("\n--- PRODUCT VERWIJDEREN ---")
     if toon_producten_lijst(db):
         try:
@@ -80,6 +91,7 @@ def verwijder_een_product(db):
             print("FOUT: Ongeldige invoer.")
         
 def main():
+    """De hoofdfunctie die de applicatie start."""
     db = DatabaseManager()
     db.create_tables() 
 
