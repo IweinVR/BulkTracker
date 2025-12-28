@@ -49,15 +49,13 @@ def log_consumptie(db):
     print("\n--- ETEN LOGGEN ---")
     
     toon_producten_lijst(db)
-    
-    try:
-        prod_id = int(input("\nWelk ID heb je gegeten? "))
-        gram = float(input("Hoeveel gram? "))
-        
-        
-        db.voeg_consumptie_toe(prod_id, gram)
-    except ValueError:
-        print("FOUT: Voer geldige getallen in.")   
+    if toon_producten_lijst(db):
+        try:
+            prod_id = int(input("\nWelk ID heb je gegeten? "))
+            gram = float(input("Hoeveel gram? "))
+            db.voeg_consumptie_toe(prod_id, gram)
+        except ValueError:
+            print("FOUT: Voer geldige getallen in.")   
         
 def genereer_rapport(db):
     """Start de rapportage module om een Excel te maken."""
